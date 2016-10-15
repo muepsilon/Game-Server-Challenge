@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+
+  namespace :api do
+    post 'game/new' => 'games#new'
+    post 'game/join' => 'games#join'
+    post 'game/start' => 'games#start'
+    get 'game/info' => 'games#info'
+    post 'game/play' => 'games#play'
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

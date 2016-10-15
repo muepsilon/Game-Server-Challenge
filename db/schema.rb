@@ -11,19 +11,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161014193007) do
+ActiveRecord::Schema.define(version: 20161015195206) do
 
-  create_table "games", force: :cascade do |t|
+  create_table "api_games", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "api_grids", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "api_players", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "api_words", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "dict_words", force: :cascade do |t|
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
-    t.string   "gameid",     limit: 255, null: false
+    t.string   "word",       limit: 255, null: false
+    t.integer  "length",     limit: 8,   null: false
+  end
+
+  add_index "dict_words", ["word"], name: "index_dict_words_on_word", using: :btree
+
+  create_table "games", force: :cascade do |t|
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.string   "gameid",     limit: 255,             null: false
+    t.integer  "status",     limit: 4,   default: 0, null: false
   end
 
   create_table "grids", force: :cascade do |t|
-    t.datetime "created_at",               null: false
-    t.datetime "updated_at",               null: false
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
     t.integer  "game_id",    limit: 4
-    t.text     "text",       limit: 65535, null: false
+    t.text     "text",       limit: 65535,              null: false
+    t.integer  "size",       limit: 8,     default: 15, null: false
   end
 
   add_index "grids", ["game_id"], name: "fk_rails_b42e42914d", using: :btree
@@ -47,6 +78,7 @@ ActiveRecord::Schema.define(version: 20161014193007) do
     t.float    "points",     limit: 24,  default: 0.0,   null: false
     t.boolean  "admin",                  default: false, null: false
     t.integer  "game_id",    limit: 4
+    t.string   "nick",       limit: 255
   end
 
   add_index "players", ["game_id"], name: "fk_rails_d71756309d", using: :btree

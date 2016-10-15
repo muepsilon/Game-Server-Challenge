@@ -7,6 +7,7 @@ class CreatePlayers < ActiveRecord::Migration
       t.float :points, null: false, default: 0
       t.boolean :admin, null: false, default: false
       t.references :game, foreign_key: true
+      t.string :nick, :null => true
     end
   end
 end
