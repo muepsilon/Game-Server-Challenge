@@ -1,0 +1,22 @@
+$grey-medium: #D1D1D1;
+
+body{
+  font-family: 'Roboto', sans-serif;
+}
+
+.box{
+  border: 1px solid $grey-medium;
+  padding: 20px;
+  text-align: center;
+}
+
+.alert-box{
+  background-color: #F44333;
+  border-radius: 1px;
+  height: 40px;
+  margin: 10px 0;
+  color: white;
+  padding: 10px;
+  font-weight: 400;
+  font-size: 14px;
+}

@@ -49,6 +49,6 @@ class Api::GamesController < ApplicationController
   def params_play
     params.require(:game_id)
     params.require(:player_id)
-    params.permit(:game_id,:player_id,:word_indexes)
+    params.permit(:game_id,:player_id,:word)
   end
 end

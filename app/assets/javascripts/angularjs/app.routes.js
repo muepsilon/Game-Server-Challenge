@@ -21,7 +21,11 @@
       templateUrl:"templates/partials/home.html"
     })
     .state('game', {
-      url:'/game',
+      url:'/game?:game_id&:player_id',
+      params: {
+        game_id: null,
+        player_id: null
+      },
       controller:"gameController",
       controllerAs:"vm",
       templateUrl:"templates/partials/game.html"

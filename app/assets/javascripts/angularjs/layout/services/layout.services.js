@@ -13,6 +13,8 @@
   */
   function Layout($http,$location) {
 
+    var url_base = $location.protocol() + "://" + $location.host() + ":" + $location.port(); 
+
     var Layout = {
       new_game: new_game,
       start_game: start_game,
@@ -22,27 +24,23 @@
     };
 
     return Layout;
-  }
 
-  function new_game(nick){
-    url = $location.origin + '/api/game/new';
-    return $http.post(url,{"nick": nick});
-  }
-  
-  function start_game(game_id,player_id){
-    url = $location.origin + '/api/game/start';
-    return $http.post(url,{"game_id": game_id,"player_id":player_id});
-  }
-  function join_game(game_id, nick){
-    url = $location.origin + '/api/game/join';
-    return $http.post(url,{"nick": nick,"game_id": game_id});
-  }
-  function game_info(game_id,player_id){
-    url = $location.origin + '/api/game/info?game_id=' + game_id + "&player_id=" + player_id;
-    return $http.get(url);
-  }
-  function play_game(game_id,player_id,word_indexes){
-    url = $location.origin + '/api/game/play';
-    return $http.post(url,{"game_id": game_id, "player_id": player_id, "word_indexes": word_indexes});
+    function new_game(nick){
+      return $http.post(url_base + '/api/game/new',{"nick": nick});
+    }
+    
+    function start_game(game_id,player_id){
+      return $http.post(url_base + '/api/game/start',{"game_id": game_id,"player_id":player_id});
+    }
+    function join_game(game_id, nick){
+      return $http.post(url_base + '/api/game/join',{"nick": nick,"game_id": game_id});
+    }
+    function game_info(game_id,player_id){
+      var url = url_base + '/api/game/info?game_id=' + game_id + "&player_id=" + player_id;
+      return $http.get(url);
+    }
+    function play_game(game_id,player_id,word){
+      return $http.post(url_base + '/api/game/play',{"game_id": game_id, "player_id": player_id, "word": word});
+    }
   }
 })();

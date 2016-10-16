@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
 
-  get 'static_pages/index'
-
   namespace :api do
     post 'game/new' => 'games#new'
     post 'game/join' => 'games#join'
@@ -10,5 +8,6 @@ Rails.application.routes.draw do
     post 'game/play' => 'games#play'
   end
   
-  get '/' => 'static_pages#index'
+  get '*path' => 'static_pages#index'
+  root 'static_pages#index'
 end

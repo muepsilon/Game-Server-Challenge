@@ -33,7 +33,7 @@ class Api::Game < ::Game
     # Check if game exist
     game = Game.find_or_nil params[:game_id]
     if game
-      text = Grid.where(game_id: game.id).pluck(:text).first rescue ''
+      text = game.grid.pluck(:text) rescue ''
       if params[:player_id] and not params[:player_id].empty?
         player = Player.find_or_nil params[:player_id], game.id
         if player and player.admin
@@ -42,7 +42,7 @@ class Api::Game < ::Game
           msg = "Not authorized to start game"
         end
       else
-        players = Player.where(game_id: game.id)
+        players = game.player
         if players.count == 1
           success,msg = update_status game, :in_play, "Game started"
         else
@@ -58,19 +58,23 @@ class Api::Game < ::Game
   def self.info params
     # Check if game exist
     game = Game.find_or_nil params[:game_id]
+    if game.nil?
+      return {:game_status => '', :current_player => '',:turn_seq => [], :words_done => [],:scores => [],:grid => '',:grid_size => ''}  
+    end
     # Status
-    status = game.status rescue ''
+    status = game.status
     # Current Player
     current_player = Api::Player.current_player(game.id)["nick"] rescue ""
     # Turn sequence
     turn_seq = Api::Player.turn_seq(game.id)
     # Grid
-    grid = Api::Grid.get_grid_text_or_nil game.id
+    grid = game.grid
     # Words Done
-    words_done = Api::Word.identified_words game.id
+    words_done = grid.word.pluck(:word)
     # Scores
     scores = Api::Player.get_scores game.id
-    {:game_status => status, :current_player => current_player,:turn_seq => turn_seq, :words_done => words_done,:scores => scores,:grid => grid}  
+
+    {:game_status => status, :current_player => current_player,:turn_seq => turn_seq, :words_done => words_done,:scores => scores,:grid => grid.text,:grid_size => grid.size}  
   end
 
   private

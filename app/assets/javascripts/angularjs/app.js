@@ -5,7 +5,8 @@
     .module('gserver', [
       'gserver.routes',
       'gserver.config',
-      'gserver.layout'
+      'gserver.layout',
+      'ngCookies'
     ]).run(run);
 
   run.$inject = ['$http', '$rootScope', '$location', '$timeout','$rootElement'];

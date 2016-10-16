@@ -1,0 +1,20 @@
+$grey-medium: #D1D1D1;
+$blue-shade: #7c89d2;
+
+.grid{
+  width: 500px;
+  text-align: center;
+}
+
+.grid-row{
+}
+
+.grid-column{
+  padding: 3px !important;
+  cursor: pointer;
+}
+
+.selected{
+  background-color: $blue-shade;
+  border: 0 !important;
+}

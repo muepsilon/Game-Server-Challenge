@@ -5,33 +5,26 @@ class Api::Grid < ::Grid
     Grid.create(game_id: gameid, text: text, size: size)
   end
 
-  def self.get_grid_text_or_nil game_id
-    Grid.where(game_id: game_id).pluck(:text).first rescue ''
+  def self.get_grid_or_nil game_id
+    Grid.where(game_id: game_id).first rescue nil
   end
 
   def self.verify_word params
     score = 0
     game = Game.find_or_nil params[:game_id]
     # Check if player is according to turn sequence
-    if params[:player_id] == Api::Player.current_player(game.id)["playerid"]
-      # Get Grid Text
-      grid = Grid.where(game_id: game.id).first rescue nil
-      
-      if grid and grid.text 
-        # Identify word
-        word = get_word_from_index params[:word_indexes], grid.text, grid.size
-        # Check if its a valid word
-        if word
-          # Assign points
-          score = Api::Word.assign_points word
-          # Add move to move sequence
-          player = Player.find_or_nil params[:player_id], game.id
-          MoveSequence.create(score: score, word: word, player_id: player.id, game_id: game.id)
-          if score > 0
-            Word.create(word: word, grid_id: grid.id)
-            player.points+=score
-            player.save!
-          end
+    if game and params[:player_id] == Api::Player.current_player(game.id)["playerid"]
+      # Check if its a valid word
+      if params[:word]
+        # Assign points
+        score = Api::Word.assign_points params[:word]
+        # Add move to move sequence
+        player = Player.find_or_nil params[:player_id], game.id
+        MoveSequence.create(score: score, word: params[:word], player_id: player.id, game_id: game.id)
+        if score > 0
+          Word.create(word: params[:word], grid_id: game.grid.id)
+          player.points+=score
+          player.save!
         end
       end
     end
@@ -39,20 +32,6 @@ class Api::Grid < ::Grid
   end
 
   private
-
-  def self.get_word_from_index word_indexes, text, n_columns
-    begin
-      index_pair = JSON.parse(word_indexes)
-      indexes = index_pair.map{ |arr| arr[0]*n_columns + arr[1]}
-      word_array = []
-      indexes.each do |index|
-        word_array.push(text[index])
-      end
-      word_array.join()
-    rescue
-      nil
-    end
-  end
 
   def self.generate_grid_text size
     # Get words
