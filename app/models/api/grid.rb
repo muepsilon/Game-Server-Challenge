@@ -75,7 +75,7 @@ class Api::Grid < ::Grid
 
   def self.put_words_in_grid words, size
     # Initialize grid
-    grid_array = [['*']*size]*size
+    grid_array = Array.new(size){ Array.new(size, '*')}
     inserted_words = []
     max_count = size*2
     # Place each word in grid
