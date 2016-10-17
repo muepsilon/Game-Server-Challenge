@@ -42,7 +42,7 @@ class Api::Game < ::Game
     # Check if game exist
     game = Game.find_or_nil params[:game_id]
     if game
-      text = game.grid.pluck(:text) rescue ''
+      text = game.grid.text rescue ''
       if params[:player_id] and not params[:player_id].empty?
         player = Player.find_or_nil params[:player_id], game.id
         if player and player.admin
