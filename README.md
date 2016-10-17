@@ -1,4 +1,4 @@
-== Scrabble Game Server 
+## Scrabble Game Server 
 Allows you to create,join and start new NxN grid scrabble multi player game.
 
 Steps you may want to follow:
