@@ -40,9 +40,11 @@
       vm.dispatcher = new WebSocketRails(url_base + '/websocket');
       vm.channel = vm.dispatcher.subscribe('play');
       vm.channel.bind('push_info', function(data) {
-        vm.game_info = data;
-        flushSelection();
-        $scope.$apply();
+        if (vm.gameid === data.gameid) {
+          vm.game_info = data;
+          flushSelection();
+          $scope.$apply();
+        };
       });
     });
     

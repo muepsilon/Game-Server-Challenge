@@ -60,7 +60,7 @@ class Api::Game < ::Game
     # Check if game exist
     game = Game.find_or_nil params[:game_id]
     if game.nil?
-      return {:game_status => '', :current_player => '',:turn_seq => [], :words_done => [],:scores => [],:grid => '',:grid_size => '',:players => []}  
+      return {:game_status => '',:gameid => '', :current_player => '',:turn_seq => [], :words_done => [],:scores => [],:grid => '',:grid_size => '',:players => []}  
     end
     # Status
     status = game.status
@@ -77,7 +77,7 @@ class Api::Game < ::Game
     # Player id's
     players = convert_players_array_to_hash(game.player.select(:nick,:playerid).to_a)
 
-    {:game_status => status, :current_player => current_player,:turn_seq => turn_seq, :words_done => words_done,:scores => scores,:grid => grid.text,:grid_size => grid.size, :players => players}  
+    {:game_status => status, :gameid => game.gameid,:current_player => current_player,:turn_seq => turn_seq, :words_done => words_done,:scores => scores,:grid => grid.text,:grid_size => grid.size, :players => players}  
   end
 
   private
