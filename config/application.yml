@@ -1,0 +1,21 @@
+# Add configuration values here, as shown below.
+#
+development:
+  # =======================
+  # Database settings
+  # =======================
+  DB_USERNAME: "gserver"
+  DB_PASSWORD: "gserver"
+  DICT_FILE_PATH: '/usr/share/dict/words'
+  DICT_WORDS_MIN_LENGTH: "3"
+  DICT_WORDS_MAX_LENGTH: "20"
+
+production:
+  # =======================
+  # Database settings
+  # =======================
+  DB_USERNAME: "gserver"
+  DB_PASSWORD: "gserver"
+  DICT_FILE_PATH: '/usr/share/dict/words'
+  DICT_WORDS_MIN_LENGTH: "3"
+  DICT_WORDS_MAX_LENGTH: "20"

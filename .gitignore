@@ -39,7 +39,7 @@
 .rvmrc
 
 # Ignore application configuration
-/config/application.yml
+# /config/application.yml
 
 # Ignore log files
 /log/
