@@ -30,7 +30,7 @@
     vm.player_nick = null;
     vm.game_step = {"word": "","score": "","success": false};
     vm.showMessageBox = false;
-    var url_base = $location.host() + ":" + $location.port();//$location.protocol() + "://" + $location.host() + ":" + $location.port();
+    var url_base = $location.host() + ":" + $location.port();
 
     // Get params
     vm.gameid = $stateParams.game_id;

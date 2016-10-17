@@ -9,7 +9,7 @@ namespace :one_timers do
       if word
         length = line.strip.length
         if length >= min_len and length <= max_len
-          dict_word = DictWord.find_or_initialize_by(word: line.strip, length: length)
+          dict_word = DictWord.find_or_initialize_by(word: line.downcase.strip, length: length)
           if !dict_word.save
             log_file.debug("#{line}")
           end
