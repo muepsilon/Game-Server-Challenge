@@ -25,8 +25,8 @@
 
     return Layout;
 
-    function new_game(nick){
-      return $http.post(url_base + '/api/game/new',{"nick": nick});
+    function new_game(nick,grid_size){
+      return $http.post(url_base + '/api/game/new',{"nick": nick,"size": grid_size});
     }
     
     function start_game(game_id,player_id){

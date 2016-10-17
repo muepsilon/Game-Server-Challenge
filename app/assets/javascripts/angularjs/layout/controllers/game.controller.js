@@ -9,12 +9,12 @@
     .module('gserver.layout.controllers')
     .controller('gameController', gameController);
 
-  gameController.$inject = ['$scope','Layout','$stateParams','$state','$cookies','$timeout'];
+  gameController.$inject = ['$scope','Layout','$stateParams','$state','$cookies','$timeout','$location'];
 
   /**
   * @namespace gameController
   */
-  function gameController($scope, Layout,$stateParams,$state,$cookies,$timeout) {
+  function gameController($scope, Layout,$stateParams,$state,$cookies,$timeout,$location) {
 
     var vm = this;
     vm.showpage = false;
@@ -30,16 +30,16 @@
     vm.player_nick = null;
     vm.game_step = {"word": "","score": "","success": false};
     vm.showMessageBox = false;
+    var url_base = $location.protocol() + "://" + $location.host() + ":" + $location.port();
 
     // Get params
     vm.gameid = $stateParams.game_id;
     vm.playerid = $stateParams.player_id;
 
     angular.element(document).ready(function () {
-      vm.dispatcher = new WebSocketRails('localhost:3000/websocket');
+      vm.dispatcher = new WebSocketRails(url_base + '/websocket');
       vm.channel = vm.dispatcher.subscribe('play');
       vm.channel.bind('push_info', function(data) {
-        console.log(data);
         vm.game_info = data;
         flushSelection();
         $scope.$apply();
@@ -53,7 +53,7 @@
       $cookies.put('gameid',vm.gameid);
     };
     if (vm.playerid == null) { 
-      vm.playerid = $cookies.get('playerid')
+      vm.playerid = $cookies.get('playerid');
     } else {
       $cookies.put('playerid',vm.playerid);
     };

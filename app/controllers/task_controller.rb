@@ -8,7 +8,6 @@ class TaskController < WebsocketRails::BaseController
   def submit
     response = Api::Grid.verify_word message
     new_info = Api::Game.info message
-    puts new_info, new_info.class
     WebsocketRails[:play].trigger 'push_info', new_info
     trigger_success response
   end

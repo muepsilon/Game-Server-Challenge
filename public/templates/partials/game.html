@@ -16,11 +16,18 @@
   <div class="col-xs-4 col-md-5 col-lg-6">
     <h5>Status: {{ vm.game_info.game_status | uppercase }}</h5>
     <h5>GameId: {{vm.gameid}}</h5>
-    <div class="col-xs-6">
+    <div class="col-xs-6" ng-show="vm.game_info.words_done.length > 0">
       <h4>Words Done</h4>
-      <ul class="list-items">
-        <li ng-repeat="word in vm.game_info.words_done">{{word}}</li>
-      </ul>
+      <div class="col-xs-12 words-list">
+        <table class="table table-bordered">
+          <tr>
+            <th>Words</th>
+          </tr>
+          <tr ng-repeat="word in vm.game_info.words_done">
+            <td>{{word}}</td>
+          </tr>
+        </table>
+      </div>
     </div>
     <div class="col-xs-6">
       <h4>Standing!</h4>

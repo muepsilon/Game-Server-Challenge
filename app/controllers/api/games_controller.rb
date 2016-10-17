@@ -1,7 +1,7 @@
 class Api::GamesController < ApplicationController
 
   def new
-    response = Api::Game.new(params_new[:nick])
+    response = Api::Game.new(params_new[:nick],params_new[:size])
     render :json => response, :status => :ok
   end
 
@@ -28,7 +28,7 @@ class Api::GamesController < ApplicationController
   private
 
   def params_new
-    params.permit(:nick)
+    params.permit(:nick,:size)
   end
 
   def params_join

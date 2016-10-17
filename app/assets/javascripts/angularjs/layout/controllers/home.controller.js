@@ -18,6 +18,7 @@
 
     var vm = this;
     vm.joinGame = {};
+    vm.playerid = $cookies.get('playerid');
     vm.startGame = {};
     vm.newGame = {};
     vm.infoGame = {};
@@ -63,7 +64,7 @@
       });
     }
     function new_game () {
-      Layout.new_game(vm.newGame.nick)
+      Layout.new_game(vm.newGame.nick,vm.newGame.grid_size)
       .then(function successCallback (response) {
         $cookies.put('gameid',response.data.game_id);
         $cookies.put('playerid',response.data.player_id);

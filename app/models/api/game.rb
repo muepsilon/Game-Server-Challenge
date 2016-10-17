@@ -24,6 +24,7 @@ class Api::Game < ::Game
         registered = true
       end
     end
+    ModelHelpers::broadcast_info(params[:game_id])
     {:nick => params[:nick], :player_id => playerid, :registered => registered }
   end
 
