@@ -1,8 +1,13 @@
 class Api::GamesController < ApplicationController
 
   def new
-    response = Api::Game.new(params_new[:nick],params_new[:size])
-    render :json => response, :status => :ok
+    size = (/^\d+$/.match(params_new[:size])).to_s.to_i
+    if size == 0
+      response,status = {:msg => "Invalid Grid size"},400
+    else
+      response,status = Api::Game.new(params_new[:nick],size),:ok
+    end
+    render :json => response, :status => status
   end
 
   def join
