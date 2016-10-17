@@ -17,7 +17,7 @@
     "tests"
   ],
   "dependencies": {
-    "angular": "~1.2.16",
+    "angular": "~1.5.9",
     "bootstrap": "~3.3.7",
     "angular-ui-router": "~0.3.1",
     "angular-cookies": "~1.5.9"
