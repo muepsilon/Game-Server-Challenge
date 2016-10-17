@@ -34,8 +34,10 @@ class Api::Grid < ::Grid
   private
 
   def self.generate_grid_text size
+    # Renerate random IDs
+    random_ids = (3*size).times.map{ Random.rand(500000) } 
     # Get words
-    words = DictWord.where("length < ?",size).where("length > ?",4).order("RAND()").limit(2*size).pluck(:word)
+    words = DictWord.where("length < ?",size).where("length > ?",4).where("id in (?)",random_ids).limit(2*size).pluck(:word)
     # Build Grid
     grid_array,inserted_words = put_words_in_grid words, size
     # Convert to text
