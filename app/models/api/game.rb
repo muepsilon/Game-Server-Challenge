@@ -12,6 +12,14 @@ class Api::Game < ::Game
     {:nick => nick, :player_id => player.playerid, :game_id => game.gameid}
   end
 
+  def self.fetchall
+    info = []
+    Game.all.limit(20).each do |game|
+      info.push({game_id: game.gameid, no_players: game.player.length, grid_size: game.grid.size})
+    end
+    info
+  end
+
   def self.join params
     # Check if game exist
     game = Game.find_or_nil params[:game_id]
@@ -39,6 +47,7 @@ class Api::Game < ::Game
         player = Player.find_or_nil params[:player_id], game.id
         if player and player.admin
           success,msg = update_status game, :in_play, "Game started"
+          ModelHelpers::broadcast_info(params[:game_id])
         else
           msg = "Not authorized to start game"
         end
@@ -46,6 +55,7 @@ class Api::Game < ::Game
         players = game.player
         if players.count == 1
           success,msg = update_status game, :in_play, "Game started"
+          ModelHelpers::broadcast_info(params[:game_id])
         else
           msg = "Provide Player id"
         end

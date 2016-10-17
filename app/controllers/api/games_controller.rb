@@ -25,6 +25,11 @@ class Api::GamesController < ApplicationController
     render :json => response, :status => :ok
   end
 
+  def fetchall
+    response = Api::Game.fetchall
+    render :json => response, :status => :ok  
+  end
+
   private
 
   def params_new

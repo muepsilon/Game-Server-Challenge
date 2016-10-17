@@ -11,11 +11,20 @@
         </td>
       </tr>
     </table>
-    <button class="btn btn-default" ng-click="vm.submitWord()" ng-disabled="vm.game_info.game_status != 'in_play' || vm.playerid != vm.game_info.current_player">Submit</button>
+    <div class="col-xs-12" ng-hide="vm.submitcheck()">
+      <button class="btn btn-default" ng-click="vm.submitWord()" ng-disabled="vm.selected_grid.length == 0">Submit</button>
+      <button class="btn btn-default" ng-click="vm.submitWord('pass')">Pass</button>
+    </div> 
   </div>
   <div class="col-xs-4 col-md-5 col-lg-6">
-    <h5>Status: {{ vm.game_info.game_status | uppercase }}</h5>
-    <h5>GameId: {{vm.gameid}}</h5>
+    <div class="col-xs-12">
+      <div class="col-xs-4"><h5>Status: {{ vm.game_info.game_status | uppercase }}</h5></div>
+      <div class="col-xs-8">
+        <button class="btn btn-primary" ng-show="vm.showStartBtn()" ng-click="vm.start_game()">Start</button>
+        <span>  {{vm.startErrorMsg}}  </span>
+      </div>
+      <div class="col-xs-12"><h5>Game ID: {{vm.gameid}}</h5></div>
+    </div>
     <div class="col-xs-6" ng-show="vm.game_info.words_done.length > 0">
       <h4>Words Done</h4>
       <div class="col-xs-12 words-list">

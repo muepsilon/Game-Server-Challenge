@@ -33,6 +33,12 @@
     vm.showErrorMessage = false;
     vm.errorMessage = '';
     vm.showMessage = showMessage;
+    vm.games = [];
+
+    Layout.game_all()
+    .then(function callback(response) {
+      vm.games = response.data;
+    });
 
     function start_game () {
       Layout.start_game(vm.startGame.gameid,vm.startGame.playerid)

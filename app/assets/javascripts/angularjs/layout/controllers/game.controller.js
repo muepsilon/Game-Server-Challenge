@@ -26,10 +26,14 @@
     vm.last_selected_grid_elem = [];
     vm.submitWord = submitWord;
     vm.dispatcher = null;
+    vm.showStartBtn = showStartBtn;
     vm.channel = null;
     vm.player_nick = null;
     vm.game_step = {"word": "","score": "","success": false};
     vm.showMessageBox = false;
+    vm.startErrorMsg = "";
+    vm.submitcheck = submitcheck;
+    vm.start_game = start_game;
     var url_base = $location.host() + ":" + $location.port();
 
     // Get params
@@ -84,15 +88,6 @@
       // body...
     });
 
-    // Functions
-    // function get_player_nick_or_null (players,playerid) {
-    //   var nick = null;
-    //   angular.forEach(players, function(value, key) {
-    //     console.log(value,key,playerid);
-    //     if (key == playerid) {nick = value};
-    //   });
-    //   return nick
-    // }
     $scope.getNumber = function(num) {
       return new Array(num);  
     }
@@ -137,7 +132,6 @@
       vm.game_step.score = response.score;
       vm.game_step.success = response.success;
       showMessage();
-      console.log(response);
     }
     function failure(response) {
       // body...
@@ -149,11 +143,33 @@
         vm.showMessageBox = false;
       }, 3000);
     }
-    function submitWord(){
+    function start_game () {
+      Layout.start_game(vm.gameid,vm.playerid)
+      .then(function successCallback (response) {
+        if (response.data.success == false) {
+          vm.startErrorMsg = response.data.message;
+          $timeout(function() {
+            vm.startErrorMsg = '';
+          },3000);
+        };
+      },function failureCallback (response) {
+        // body...
+      })
+    }
+    function showStartBtn() {
+      var show = vm.game_info.game_status == 'waiting';
+      return show
+    }
+    function submitcheck () {
+      return (vm.game_info.game_status != 'in_play' || vm.playerid != vm.game_info.current_player)
+    }
+    function submitWord(type){
       var word = '';
-      for (var i = 0; i < vm.selected_grid.length; i++) {
-        word+=getGridLetter(vm.selected_grid[i][0],vm.selected_grid[i][1]);
-      };
+      if(type != 'pass'){
+        for (var i = 0; i < vm.selected_grid.length; i++) {
+          word+=getGridLetter(vm.selected_grid[i][0],vm.selected_grid[i][1]);
+        };
+      }
       vm.game_step.word = word;
       vm.dispatcher.trigger('submit_word', {"player_id": vm.playerid, "word": word,"game_id": vm.gameid},success,failure);
     }

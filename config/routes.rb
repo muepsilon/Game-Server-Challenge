@@ -5,6 +5,8 @@ Rails.application.routes.draw do
     post 'game/join' => 'games#join'
     post 'game/start' => 'games#start'
     get 'game/info' => 'games#info'
+    get 'game/fetchall' => 'games#fetchall'
+    post 'game/quit' => 'games#quit'
     post 'game/play' => 'games#play'
   end
   

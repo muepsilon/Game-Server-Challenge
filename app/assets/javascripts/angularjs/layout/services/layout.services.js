@@ -21,6 +21,7 @@
       join_game: join_game,
       game_info: game_info,
       play_game: play_game,
+      game_all: game_all,
     };
 
     return Layout;
@@ -37,6 +38,10 @@
     }
     function game_info(game_id,player_id){
       var url = url_base + '/api/game/info?game_id=' + game_id + "&player_id=" + player_id;
+      return $http.get(url);
+    }
+    function game_all(){
+      var url = url_base + '/api/game/fetchall';
       return $http.get(url);
     }
     function play_game(game_id,player_id,word){

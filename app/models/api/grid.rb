@@ -14,18 +14,18 @@ class Api::Grid < ::Grid
     game = Game.find_or_nil params[:game_id]
     # Check if player is according to turn sequence
     if game and params[:player_id] == Api::Player.current_player(game.id)["playerid"]
-      # Check if its a valid word
-      if params[:word]
-        # Assign points
-        score = Api::Word.assign_points params[:word]
-        # Add move to move sequence
-        player = Player.find_or_nil params[:player_id], game.id
-        MoveSequence.create(score: score, word: params[:word], player_id: player.id, game_id: game.id)
-        if score > 0
-          Word.create(word: params[:word], grid_id: game.grid.id)
-          player.points+=score
-          player.save!
-        end
+      # Assign points
+      score = Api::Word.assign_points params[:word]
+      # Add move to move sequence
+      player = Player.find_or_nil params[:player_id], game.id
+      MoveSequence.create(score: score, word: params[:word], player_id: player.id, game_id: game.id)
+      if score > 0
+        Word.create(word: params[:word], grid_id: game.grid.id)
+        player.points+=score
+        player.save!
+      elsif params[:word].length == 0
+        # Check for game completion
+        check_for_game_completion(game)
       end
     end
     {:score => score, :success => score > 0}  
@@ -33,6 +33,23 @@ class Api::Grid < ::Grid
 
   private
 
+  def self.check_for_game_completion game
+    players = game.player
+    sum = 0
+    players.each do |player|
+      if player.move_sequence.length > 0
+        sum+= player.move_sequence.last.word.length
+      else
+        sum = 1
+        break
+      end
+    end
+    if sum == 0
+      game.status = :completed
+      game.save
+    end
+  end
+  
   def self.generate_grid_text size
     # Renerate random IDs
     random_ids = (3*size).times.map{ Random.rand(500000) } 
