@@ -70,7 +70,7 @@
       });
     }
     function new_game () {
-      Layout.new_game(vm.newGame.nick,vm.newGame.grid_size)
+      Layout.new_game(vm.newGame.nick,vm.newGame.grid_size.toString())
       .then(function successCallback (response) {
         $cookies.put('gameid',response.data.game_id);
         $cookies.put('playerid',response.data.player_id);
