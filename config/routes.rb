@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     post 'game/play' => 'games#play'
   end
   
-  get '*path' => 'static_pages#index'
+  get '/' => 'static_pages#index'
+  get '/game' => 'static_pages#index'
   root 'static_pages#index'
 end

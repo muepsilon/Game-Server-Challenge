@@ -59,12 +59,12 @@ class Api::Game < ::Game
     # Check if game exist
     game = Game.find_or_nil params[:game_id]
     if game.nil?
-      return {:game_status => '', :current_player => '',:turn_seq => [], :words_done => [],:scores => [],:grid => '',:grid_size => ''}  
+      return {:game_status => '', :current_player => '',:turn_seq => [], :words_done => [],:scores => [],:grid => '',:grid_size => '',:players => []}  
     end
     # Status
     status = game.status
     # Current Player
-    current_player = Api::Player.current_player(game.id)["nick"] rescue ""
+    current_player = Api::Player.current_player(game.id)["playerid"] rescue ""
     # Turn sequence
     turn_seq = Api::Player.turn_seq(game.id)
     # Grid
@@ -73,11 +73,21 @@ class Api::Game < ::Game
     words_done = grid.word.pluck(:word)
     # Scores
     scores = Api::Player.get_scores game.id
+    # Player id's
+    players = convert_players_array_to_hash(game.player.select(:nick,:playerid).to_a)
 
-    {:game_status => status, :current_player => current_player,:turn_seq => turn_seq, :words_done => words_done,:scores => scores,:grid => grid.text,:grid_size => grid.size}  
+    {:game_status => status, :current_player => current_player,:turn_seq => turn_seq, :words_done => words_done,:scores => scores,:grid => grid.text,:grid_size => grid.size, :players => players}  
   end
 
   private
+
+  def self.convert_players_array_to_hash players_array
+    hash = {}
+    players_array.each do |player|
+      hash[player[:playerid]] = player[:nick]
+    end
+    hash
+  end
   def self.update_status game, status, msg
     success = false
     game_status = game.status.to_sym

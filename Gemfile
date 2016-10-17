@@ -39,3 +39,5 @@ end
 
 gem 'mysql2'
 gem 'figaro'
+gem 'faye-websocket', '0.10.0'
+gem 'websocket-rails'
