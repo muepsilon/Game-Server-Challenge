@@ -58,6 +58,6 @@ WebsocketRails.setup do |config|
   # Supporting HTTP streaming on Internet Explorer versions 8 & 9
   # requires CORS to be enabled for GET "/websocket" request.
   # List here the origin domains allowed to perform the request.
-    config.allowed_origins = ['http://localhost:3000']
+    config.allowed_origins = ['http://localhost:3000','https://gserverchallenge.herokuapp.com']
 
 end
