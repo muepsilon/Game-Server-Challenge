@@ -1,0 +1,59 @@
+$grey-medium: #D1D1D1;
+$blue-shade: #7c89d2;
+
+.grid{
+  width: 500px;
+  text-align: center;
+}
+
+.grid-row{
+}
+
+.grid-column{
+  padding: 3px !important;
+  cursor: pointer;
+}
+
+.selected{
+  background-color: $blue-shade;
+  border: 0 !important;
+}
+
+.current-player{
+  background-color: #2ecc71;
+}
+
+.list-items{
+  list-style: none;
+  padding: 3px 5px;
+
+  li{
+    padding: 3px;
+    text-transform: capitalize;
+    overflow: hidden;
+  }
+}
+
+.message-box{
+  background-color: #82ca8e;
+  position: fixed;
+  width: 40%;
+  left: 30%;
+  padding: 20px;
+  top: 200px;
+  font-size: 16px;
+  border-radius: 5px;
+  animation: fade 0.5s linear;
+  justify-content: space-between;
+  display: flex;
+}
+
+@keyframes fade {
+  0% { opacity: 0 }
+  100%{ opacity: 1}
+}
+
+.words-list{
+  height: 400px;
+  overflow: scroll;
+}

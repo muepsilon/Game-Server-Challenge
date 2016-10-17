@@ -5,6 +5,7 @@ class CreateGrids < ActiveRecord::Migration
       t.timestamps null: false
       t.references :game, foreign_key: true
       t.text :text, null: false
+      t.bigint :size, null: false, default: 15
     end
   end
 end

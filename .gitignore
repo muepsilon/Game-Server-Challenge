@@ -16,18 +16,6 @@
 ## Specific to RubyMotion:
 .dat*
 .repl_history
-build/
-*.bridgesupport
-build-iPhoneOS/
-build-iPhoneSimulator/
-
-## Specific to RubyMotion (use of CocoaPods):
-#
-# We recommend against adding the Pods directory to your .gitignore. However
-# you should judge for yourself, the pros and cons are mentioned at:
-# https://guides.cocoapods.org/using/using-cocoapods.html#should-i-check-the-pods-directory-into-source-control
-#
-# vendor/Pods/
 
 ## Documentation cache and generated files:
 /.yardoc/
@@ -38,6 +26,7 @@ build-iPhoneSimulator/
 ## Environment normalization:
 /.bundle/
 /vendor/bundle
+/vendor/assets/components/
 /lib/bundler/man/
 
 # for a library or gem, you might want to ignore these files since the code is
@@ -51,3 +40,6 @@ build-iPhoneSimulator/
 
 # Ignore application configuration
 /config/application.yml
+
+# Ignore log files
+/log/

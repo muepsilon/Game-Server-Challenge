@@ -1,0 +1,14 @@
+
+$border-radius-small: 2px;
+$padding-large: 10px;
+
+.btn-custom{
+  border-radius: $border-radius-small;
+  padding: 10px 40px;
+  margin: 20px;
+}
+
+.home-title{
+  margin: 30px 0;
+  text-align: center;
+}

@@ -12,5 +12,9 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
-//= require_tree .
+//= require angular/angular.min
+//= require angular-ui-router/release/angular-ui-router
+//= require angular-cookies/angular-cookies.min
+//= require websocket_rails/main
+//= require angularjs/files
+
